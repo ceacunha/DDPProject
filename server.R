@@ -30,8 +30,8 @@ shinyServer(
             newPopulation <-
                 subset(newPopulation, Population >= input$inMinStatePopulation)
             
-            ggplot(newPopulation, aes(x = Year, y = Population)) +
-                geom_point(aes(colour = State)) + ylab("Population in Millions") +
+            ggplot(newPopulation, aes(x = Year, y = Population, colour = State)) +
+                geom_point() + geom_line() + ylab("Population in Millions") +
                 xlab("Year")
         })
         

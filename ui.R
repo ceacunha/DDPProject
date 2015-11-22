@@ -1,21 +1,45 @@
 library(shiny)
 shinyUI(
     fluidPage(
-        headerPanel("Brazilian Population Growth Study"),
+        headerPanel(
+            HTML("<h2>Brazilian Populational Growth Study</h2>
+                <br>
+                <p>
+                    This Shiny App was created in order to address the course
+                    project defined by Developing Data Products course - a module
+                    part of the Johns Hopkins University Data Science Specialization
+                    on Coursera.org.
+                </p>
+                <p>
+                    The idea behind of this app is to provide an interactive
+                    exploratory tool to visualize population distribution
+                    between years 2000 and 2030 (a forecast from 2016 forward)
+                    among all Brazilian States and Federal District.
+                </p>
+                <p>
+                    As can be seen, the user is powered by filters for
+                    searching period (slide bars restrict the period in question),
+                    an numerical input text to filter mininum population
+                    (in millions) and a complete list of brazilian states.
+                </p>
+                <p>
+                    Every filter interaction automatically alters the result
+                    in the graph on the right side, which plots the growth in
+                    population per year - States are differenciated by dots and
+                    line colors.
+                 </p>
+                 ")
+        ),
         sidebarLayout(
             fluid = TRUE,
             sidebarPanel(
                 width = 5,
-                tags$label("Search Period: ", class="centered", width="200px"),
-                tags$label("From", width = "20px"),
-                tags$input(id = "inMinYear", style = "width:70px",
-                           value = 2010, min = 2000, max = 2030, type="number"),
-                tags$label("To"),
-                tags$input(id = "inMaxYear", style = "width:70px", value = 2015, min = 2000, max = 2030, type="number"),
-                
+                h4("Search Period: ", class="centered", width="200px"),
+                sliderInput("inMinYear", "From",min = 2000, max = 2030, value = 2010),
+                sliderInput("inMaxYear", "To",min = 2000, max = 2030, value = 2015),
                 numericInput(
                     inputId = "inMinStatePopulation", label = "Minimun State Population (in Milliions)",
-                    value = 1, min = 0.1, max = 200),
+                    value = 1, min = 0.1, max = 50, step = 0.5),
                 checkboxGroupInput(
                     inputId = "inState",label = "States",inline = TRUE,
                     choices = 
