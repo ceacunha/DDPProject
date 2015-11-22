@@ -1,0 +1,60 @@
+Brazilian Populational Growth Study
+========================================================
+author: Carlos Cunha
+date: `r format(Sys.Date(), format="%B - %d - %Y")`
+transition: rotate
+
+Overview
+========================================================
+- Developing Data Products Course's Project
+
+- Developed and Deployed using Shiny
+
+- Online, Real-time Interactive 
+
+- Available at <a href="https://ceacunha.shinyapps.io/DDPProject">shinyapps.io</a>
+
+- Source Code and Presentation Available at <a href="https://github.com/ceacunha/DDPProject">DDPProject</a> *GitHub* repository
+
+Application Deploy
+========================================================
+![AppPrint](application.png)
+
+
+Main Characteristics
+========================================================
+1. Understand Populational Growth per Year
+    + Apply Sales Strategy
+    + Identify Regional Strategy
+    + Create Roadmap
+
+2. Interactive Filters
+    + Brazilian States
+    + Timeframe
+    + Minimun Populational Threshold
+
+Example
+========================================================
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(reshape2)
+
+population <- read.csv("populational.data.csv",header = FALSE, sep = ";", stringsAsFactors = FALSE)
+colnames(population) <-
+    c("State",
+      "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
+      "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019",
+      "2020","2021","2022","2023","2024","2025","2026","2027","2028","2029",
+      "2030")
+population <- melt(population, "State")
+colnames(population) <- c("State", "Year", "Population")
+population$Population <-
+    round(x = population$Population/1000000, digits = 2)
+population$Year <- as.numeric(as.character(population$Year))
+```
+
+```{r, fig.width=20}
+population <- subset(population, Year >= 2010 & State == "SP" & Population >= 10)
+            
+ggplot(population, aes(x = Year, y = Population, colour = State)) + geom_point() + geom_line()
+```
